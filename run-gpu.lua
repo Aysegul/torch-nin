@@ -15,7 +15,7 @@ opt = lapp[[
    -w,--weightDecay        (default 0)        L2 penalty on the weights
    -m,--momentum           (default 0.9)         momentum (0.5)
    -d,--dropout            (default 0.5)         dropout amount
-   -b,--batchSize          (default 64)         batch size
+   -b,--batchSize          (default 128)         batch size
    -t,--threads            (default 8)           number of threads
    -p,--type               (default cuda)       float or cuda
    -i,--devid              (default 1)           device ID (if using CUDA)
