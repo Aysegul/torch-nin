@@ -4,11 +4,11 @@
 -- Clement Farabet
 ----------------------------------------------------------------------
 
-local tar = 'http://data.neuflow.org/data/cifar10.t7.tgz'
+-- download dataset
 if not paths.dirp('cifar-10-batches-t7') then
-   print '==> downloading dataset'
-   os.execute('wget ' .. tar)
-   os.execute('tar xvf ' .. paths.basename(tar))
+   local www = 'http://torch7.s3-website-us-east-1.amazonaws.com/data/cifar-10-torch.tar.gz'
+   local tar = paths.basename(www)
+   os.execute('wget ' .. www .. '; '.. 'tar xvf ' .. tar)
 end
 
 -- dataset size: -- will be resized below by opt.smalldata!!!!! be cautious!
