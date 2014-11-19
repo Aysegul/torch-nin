@@ -40,7 +40,7 @@ testData.labels = testData.labels + 1
 trainData.data = trainData.data:reshape(trsize,3,32,32)
 testData.data = testData.data:reshape(tesize,3,32,32)
 
-
+print '==> gcn data'
 function gcn(x, scale, bias, epsilon)
    local scale = scale or 55
    local bias = bias or 0
