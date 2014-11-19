@@ -63,7 +63,7 @@ model:cuda()
 loss = nn.MSECriterion()
 
 ----------------------------------------------------------------------
-
+local wds = 1e-4
 local learningRates = torch.Tensor(w:size(1)):fill(0)
 local weightDecays = torch.Tensor(w:size(1)):fill(0)
 local counter = 0
@@ -71,7 +71,7 @@ for i, layer in ipairs(model.modules) do
    if layer.__typename == 'ccn2.SpatialConvolution' then
       local weight_size = layer.weight:size(1)*layer.weight:size(2)
       learningRates[{{counter+1, counter+weight_size}}]:fill(1)
-      weightDecays[{{counter+1, counter+weight_size}}]:fill(1e-4)
+      weightDecays[{{counter+1, counter+weight_size}}]:fill(wds)
       counter = counter+weight_size
       local bias_size = layer.bias:size(1)
       learningRates[{{counter+1, counter+bias_size}}]:fill(2)
@@ -80,7 +80,7 @@ for i, layer in ipairs(model.modules) do
    elseif layer.__typename == 'nn.SpatialConvolutionMM' then
       local weight_size = layer.weight:size(1)*layer.weight:size(2)
       learningRates[{{counter+1, counter+weight_size}}]:fill(0.1)
-      weightDecays[{{counter+1, counter+weight_size}}]:fill(1e-4)
+      weightDecays[{{counter+1, counter+weight_size}}]:fill(wds)
       counter = counter+weight_size
       local bias_size = layer.bias:size(1)
       learningRates[{{counter+1, counter+bias_size}}]:fill(0.2)
