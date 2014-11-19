@@ -58,8 +58,8 @@ end
 ----------------------------------------------------------------------
 print '==> whiten data'
 require 'unsup'
-trainData.data, means, P, invP = unsup.zca_whiten(trainData.data)
-testData.data = unsup.zca_whiten(testData.data, means, P, invP)
+trainData.data, means, P, invP = unsup.zca_whiten(trainData.data, mean, P, invP, 0.1)
+testData.data = unsup.zca_whiten(testData.data, means, P, invP, 0.1)
 
 -- Exports
 return {
