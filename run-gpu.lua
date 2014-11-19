@@ -46,28 +46,9 @@ local data  = require 'data'
 local train = require 'train'
 local test  = require 'test'
 
-
-print '==> configuring optimizer'
-
-
 ----------------------------------------------------------------------
 print '==> training!'
 
---[[for i=1, 8 do
-   train(data.trainData, optimState)
-   test(data.testData)
-end
-
-
-
-optimState = {
-   learningRate = opt.learningRate*0.1,
-   momentum = opt.momentum,
-   weightDecay = opt.weightDecay,
-   learningRateDecay = opt.learningRateDecay
-}
-
-]]
 while true do
    train(data.trainData)
    test(data.testData)
