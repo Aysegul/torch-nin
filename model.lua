@@ -11,29 +11,29 @@ local dropout1 = nn.Dropout(0.5)
 local model = nn.Sequential()
 
 model:add(nn.Transpose({1,4},{1,3},{1,2}))
-model:add(nn.SpatialConvolutionCUDA(3, 192, 5, 5, 1, 1, 4, 32))
+
+model:add(ccn2.SpatialConvolution(3, 192, 5, 1, 2))
 model:add(nn.ReLU())
-model:add(nn.SpatialConvolutionCUDA(192, 160, 1, 1))
+model:add(ccn2.SpatialConvolution(192, 160, 1, 1))
 model:add(nn.ReLU())
-model:add(nn.SpatialConvolutionCUDA(160, 96, 1, 1))
+model:add(ccn2.SpatialConvolution(160, 96, 1, 1))
 model:add(nn.ReLU())
 model:add(ccn2.SpatialMaxPooling(3, 2))
 model:add(dropout0)
 
-model:add(nn.SpatialConvolutionCUDA(96, 192, 5, 5, 1,  1, 4, 16))
+model:add(ccn2.SpatialConvolution(96, 192, 5, 1, 2))
 model:add(nn.ReLU())
-model:add(nn.SpatialConvolutionCUDA(192, 192, 1, 1))
+model:add(ccn2.SpatialConvolution(192, 192, 1, 1))
 model:add(nn.ReLU())
-model:add(nn.SpatialConvolutionCUDA(192, 192, 1, 1))
+model:add(ccn2.SpatialConvolution(192, 192, 1, 1))
 model:add(nn.ReLU())
 model:add(ccn2.SpatialMaxPooling(3, 2))
 model:add(dropout1)
 
-model:add(nn.SpatialConvolutionCUDA(192, 192, 3, 3, 1, 1, 2, 8))
+model:add(ccn2.SpatialConvolution(192, 192, 3, 1, 1))
 model:add(nn.ReLU())
-model:add(nn.SpatialConvolutionCUDA(192, 192, 1, 1))
+model:add(ccn2.SpatialConvolution(192, 192, 1, 1))
 model:add(nn.ReLU())
-model:add(nn.Transpose({4,1},{4,2},{4,3}))
 
 model:add(nn.SpatialConvolutionMM(192, 10, 1, 1, 1, 1))
 model:add(nn.ReLU())
@@ -68,8 +68,8 @@ local learningRates = torch.Tensor(w:size(1)):fill(0)
 local weightDecays = torch.Tensor(w:size(1)):fill(0)
 local counter = 0
 for i, layer in ipairs(model.modules) do
-   if layer.__typename == 'nn.SpatialConvolutionCUDA' then
-      local weight_size = layer.weight:size(1)*layer.weight:size(2)*layer.weight:size(3)*layer.weight:size(4)
+   if layer.__typename == 'ccn2.SpatialConvolution' then
+      local weight_size = layer.weight:size(1)*layer.weight:size(2)
       learningRates[{{counter+1, counter+weight_size}}]:fill(1)
       weightDecays[{{counter+1, counter+weight_size}}]:fill(1e-4)
       counter = counter+weight_size
