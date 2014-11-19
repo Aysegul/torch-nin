@@ -100,7 +100,7 @@ local function train(trainData)
          -- estimate df/dW
          local dE_dy = loss:backward(y,target)
          model:backward(x,dE_dy)
-
+         dE_dw:div(opt.batchSize)
          return 0,dE_dw
       end
      optim.sgd(eval_E, w, optimState)
