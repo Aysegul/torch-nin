@@ -16,7 +16,8 @@ local wds = t.wds
 print '==> defining some tools'
 
 -- classes
-local classes = {'1','2','3','4','5','6','7','8','9','0'}
+local classes = {'airplane', 'automobile', 'bird', 'cat',
+           'deer', 'dog', 'frog', 'horse', 'ship', 'truck'}
 
 -- This matrix records the current confusion across classes
 local confusion = optim.ConfusionMatrix(classes)
