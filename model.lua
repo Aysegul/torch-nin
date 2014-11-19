@@ -40,11 +40,10 @@ model:add(nn.ReLU())
 
 -------------------------------------------------
 --- hacked global average pooling
---- will disable learning too by setting learning rate
---- nad weight decay to zero.
 model:add(nn.SpatialSubSampling(10, 8, 8, 8, 8))
 model.modules[#model.modules].weight:fill(1)
 model.modules[#model.modules].bias:fill(0)
+model.modules[#model.modules].accGradParameters = function () return nil end
 -------------------------------------------------
 
 model:add(nn.Reshape(10))
