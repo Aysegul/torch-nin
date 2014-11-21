@@ -37,6 +37,14 @@ model:add(nn.ReLU())
 
 model:add(nn.SpatialConvolutionMM(192, 10, 1, 1, 1, 1))
 model:add(nn.ReLU())
+model:add(nn.Transpose({4,1},{4,2},{4,3}))
+
+for i,layer in ipairs(model.modules) do
+   if layer.bias then
+      layer.bias:fill(0)
+      layer.weight:normal(0, 0.05)
+   end
+end
 
 -------------------------------------------------
 --- hacked global average pooling
@@ -49,19 +57,12 @@ model.modules[#model.modules].accGradParameters = function () return nil end
 model:add(nn.Reshape(10))
 model:add(nn.SoftMax())
 
-model:reset(0.05)
-
-for i,layer in ipairs(model.modules) do
-   if layer.bias then
-      layer.bias:fill(0)
-   end
-end
-
 
 model:cuda()
 loss = nn.MSECriterion()
 
 ----------------------------------------------------------------------
+local w, dE = model:getParameters()
 local wds = 1e-4
 local learningRates = torch.Tensor(w:size(1)):fill(0)
 local weightDecays = torch.Tensor(w:size(1)):fill(0)
