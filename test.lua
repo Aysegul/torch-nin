@@ -91,11 +91,6 @@ function test(testData)
    end
 
    confusion:zero()
-   -- dropout on
-   for _,d in ipairs(dropout) do
-      d.train = true
-   end
-
 end
 
 -- Export:

@@ -77,6 +77,11 @@ local function train(trainData)
       xlua.progress(t, trainData:size())
       collectgarbage()
 
+      -- dropout on
+      for _,d in ipairs(dropout) do
+        d.train = true
+      end
+
       -- batch fits?
       if (t + opt.batchSize - 1) > trainData:size() then
          break
@@ -115,10 +120,7 @@ local function train(trainData)
       for i = 1,opt.batchSize do
          confusion:add(y[i],yt[i])
       end
-      -- dropout on
-      for _,d in ipairs(dropout) do
-        d.train = true
-      end
+
 
 
    end
