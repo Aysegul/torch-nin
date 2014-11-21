@@ -17,7 +17,6 @@ opt = lapp[[
    -d,--dropout            (default 0.5)         dropout amount
    -b,--batchSize          (default 128)         batch size
    -t,--threads            (default 8)           number of threads
-   -p,--type               (default cuda)        float or cuda
    -i,--devid              (default 1)           device ID (if using CUDA)
    -s,--size               (default extra)       dataset: small or full or extra
    -o,--save               (default results)     save directory
@@ -28,16 +27,13 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(1)
 torch.setdefaulttensortype('torch.FloatTensor')
 
--- type:
-if opt.type == 'cuda' then
-   print('==> switching to CUDA')
-   require 'cutorch'
-   require 'cunn'
 
-   cutorch.setDevice(opt.devid)
-   print('==> using GPU #' .. cutorch.getDevice())
-   print(cutorch.getDeviceProperties(opt.devid))
-end
+require 'cutorch'
+require 'cunn'
+
+cutorch.setDevice(opt.devid)
+print('==> using GPU #' .. cutorch.getDevice())
+print(cutorch.getDeviceProperties(opt.devid))
 
 ----------------------------------------------------------------------
 print '==> load modules'
