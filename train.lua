@@ -47,12 +47,10 @@ print '==> allocating minibatch memory'
 
 local x = torch.Tensor(opt.batchSize,3,32,32)
 local yt = torch.Tensor(opt.batchSize)
-local target = torch.Tensor(opt.batchSize, 10):fill(0)
 
 if opt.type == 'cuda' then
    x = x:cuda()
    yt = yt:cuda()
-   target = target:cuda()
 end
 
 ----------------------------------------------------------------------
@@ -103,9 +101,8 @@ local function train(trainData)
          -- evaluate function for complete mini batch
          local y = model:forward(x)
          -- estimate df/dW
-         local dE_dy = loss:backward(y,target)
+         local dE_dy = loss:backward(y,yt)
          model:backward(x,dE_dy)
-         dE_dw:div(opt.batchSize)
          return 0,dE_dw
       end
      optim.sgd(eval_E, w, optimState)

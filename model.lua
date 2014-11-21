@@ -55,11 +55,11 @@ model.modules[#model.modules].accGradParameters = function () return nil end
 -------------------------------------------------
 
 model:add(nn.Reshape(10))
-model:add(nn.SoftMax())
+model:add(nn.LogSoftMax())
 
 
 model:cuda()
-loss = nn.MSECriterion()
+loss = nn.ClassNLLCriterion()
 
 ----------------------------------------------------------------------
 local w, dE = model:getParameters()
