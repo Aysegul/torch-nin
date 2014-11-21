@@ -45,13 +45,8 @@ local optimState = {
 
 print '==> allocating minibatch memory'
 
-local x = torch.Tensor(opt.batchSize,3,32,32)
-local yt = torch.Tensor(opt.batchSize)
-
-if opt.type == 'cuda' then
-   x = x:cuda()
-   yt = yt:cuda()
-end
+local x = torch.CudaTensor(opt.batchSize,3,32,32)
+local yt = torch.CudaTensor(opt.batchSize)
 
 ----------------------------------------------------------------------
 print '==> defining training procedure'

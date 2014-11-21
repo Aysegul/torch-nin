@@ -27,12 +27,9 @@ local confusion = optim.ConfusionMatrix(classes)
 local testLogger = optim.Logger(paths.concat(opt.save, 'test.log'))
 
 -- Batch test:
-local inputs = torch.Tensor(opt.batchSize,3,32,32)
-local targets = torch.Tensor(opt.batchSize)
-if opt.type == 'cuda' then
-   inputs = inputs:cuda()
-   targets = targets:cuda()
-end
+local inputs = torch.CudaTensor(opt.batchSize,3,32,32)
+local targets = torch.CudaTensor(opt.batchSize)
+
 
 ----------------------------------------------------------------------
 print '==> defining test procedure'
