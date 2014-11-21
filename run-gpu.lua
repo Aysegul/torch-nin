@@ -10,14 +10,14 @@ require 'torch'
 print '==> processing options'
 
 opt = lapp[[
-   -r,--learningRate       (default 0.01)       learning rate (0.1)
-   -d,--learningRateDecay  (default 0)      learning rate decay (in # samples 1e-7) )
-   -w,--weightDecay        (default 0)        L2 penalty on the weights
+   -r,--learningRate       (default 1e-3)        learning rate (0.1)
+   -d,--learningRateDecay  (default 0)           learning rate decay (in # samples 1e-7) )
+   -w,--weightDecay        (default 0)           L2 penalty on the weights
    -m,--momentum           (default 0.9)         momentum (0.5)
    -d,--dropout            (default 0.5)         dropout amount
    -b,--batchSize          (default 128)         batch size
    -t,--threads            (default 8)           number of threads
-   -p,--type               (default cuda)       float or cuda
+   -p,--type               (default cuda)        float or cuda
    -i,--devid              (default 1)           device ID (if using CUDA)
    -s,--size               (default extra)       dataset: small or full or extra
    -o,--save               (default results)     save directory
