@@ -1,7 +1,6 @@
 ----------------------------------------------------------------------
--- Train a ConvNet on SVHN.
---
--- Clement Farabet
+-- Train a ConvNet on cifar
+-- Original : Clement Farabet
 ----------------------------------------------------------------------
 
 require 'pl'
@@ -10,15 +9,14 @@ require 'torch'
 print '==> processing options'
 
 opt = lapp[[
-   -r,--learningRate       (default 1e-3)        learning rate (0.1)
-   -d,--learningRateDecay  (default 0)           learning rate decay (in # samples 1e-7) )
+   -r,--learningRate       (default 1e-3)        learning rate
+   -d,--learningRateDecay  (default 0)           learning rate decay)
    -w,--weightDecay        (default 0)           L2 penalty on the weights
-   -m,--momentum           (default 0.9)         momentum (0.5)
+   -m,--momentum           (default 0.9)         momentum
    -d,--dropout            (default 0.5)         dropout amount
-   -b,--batchSize          (default 128)         batch size
+   -b,--batchSize          (default 64)          batch size
    -t,--threads            (default 8)           number of threads
-   -i,--devid              (default 1)           device ID (if using CUDA)
-   -s,--size               (default extra)       dataset: small or full or extra
+   -i,--devid              (default 1)           device ID
    -o,--save               (default results)     save directory
 ]]
 
