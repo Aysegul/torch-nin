@@ -34,10 +34,11 @@ model:add(ccn2.SpatialConvolution(192, 192, 3, 1, 1))
 model:add(nn.ReLU())
 model:add(ccn2.SpatialConvolution(192, 192, 1, 1))
 model:add(nn.ReLU())
+model:add(nn.Transpose({4,1},{4,2},{4,3}))
 
 model:add(nn.SpatialConvolutionMM(192, 10, 1, 1, 1, 1))
 model:add(nn.ReLU())
-model:add(nn.Transpose({4,1},{4,2},{4,3}))
+
 
 for i,layer in ipairs(model.modules) do
    if layer.bias then
