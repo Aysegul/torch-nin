@@ -62,10 +62,10 @@ model:cuda()
 loss = nn.ClassNLLCriterion()
 
 ----------------------------------------------------------------------
-local w, dE = model:getParameters()
 local wds = 1e-4
-local learningRates = torch.Tensor(w:size(1)):fill(0)
-local weightDecays = torch.Tensor(w:size(1)):fill(0)
+local weight_size = 967006
+local learningRates = torch.Tensor(weight_size):fill(0)
+local weightDecays = torch.Tensor(weight_size):fill(0)
 local counter = 0
 for i, layer in ipairs(model.modules) do
    if layer.__typename == 'ccn2.SpatialConvolution' then
