@@ -53,6 +53,8 @@ model:add(nn.SpatialSubSampling(10, 8, 8, 8, 8))
 model.modules[#model.modules].weight:fill(1)
 model.modules[#model.modules].bias:fill(0)
 model.modules[#model.modules].accGradParameters = function () return nil end
+model.modules[#model.modules].accUpdateGradParameters = function () return nil end
+model.modules[#model.modules].UpdateParameters = function () return nil end
 -------------------------------------------------
 
 model:add(nn.Reshape(10))
