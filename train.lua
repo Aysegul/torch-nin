@@ -80,13 +80,11 @@ local function train(trainData)
          break
       end
 
-      -- create mini batch
+      -- create batch
       local idx = 1
-      target:fill(0)
       for i = t,t+opt.batchSize-1 do
          x[idx] = trainData.data[shuffle[i]]
          yt[idx] = trainData.labels[shuffle[i]]
-         target[idx][trainData.labels[shuffle[i]]] = 1
          idx = idx + 1
       end
       -- create closure to evaluate f(X) and df/dX
