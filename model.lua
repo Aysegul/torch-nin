@@ -39,6 +39,12 @@ model:add(nn.Transpose({4,1},{4,2},{4,3}))
 model:add(nn.SpatialConvolutionMM(192, 10, 1, 1, 1, 1))
 model:add(nn.ReLU())
 
+model:add(nn.SpatialAveragePooling(8, 8, 8, 8))
+model:add(nn.Reshape(10))
+model:add(nn.LogSoftMax())
+
+
+
 
 for i,layer in ipairs(model.modules) do
    if layer.bias then
@@ -46,19 +52,6 @@ for i,layer in ipairs(model.modules) do
       layer.weight:normal(0, 0.05)
    end
 end
-
--------------------------------------------------
---- hacked global average pooling
-model:add(nn.SpatialSubSampling(10, 8, 8, 8, 8))
-model.modules[#model.modules].weight:fill(1)
-model.modules[#model.modules].bias:fill(0)
-model.modules[#model.modules].accGradParameters = function () return nil end
-model.modules[#model.modules].accUpdateGradParameters = function () return nil end
-model.modules[#model.modules].UpdateParameters = function () return nil end
--------------------------------------------------
-
-model:add(nn.Reshape(10))
-model:add(nn.LogSoftMax())
 
 
 model:cuda()
