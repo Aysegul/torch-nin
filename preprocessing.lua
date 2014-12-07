@@ -56,3 +56,31 @@ function zca_whiten_apply(data, means, P)
    return auxdata
 
 end
+
+function gcn(x, scale, bias, epsilon)
+   local scale = scale or 55
+   local bias = bias or 0
+   local epsilon = epsilon or 1e-8
+
+   if x:dim() > 2 then
+      local num_samples = x:size(1)
+      local length = x:nElement()/num_samples
+      x = x:reshape(num_samples, length)
+   elseif x:dim() < 2 then
+      assert(false)
+   end
+
+   -- subtract mean: x = x - mean(x)
+   local m = torch.ger(x:mean(2):squeeze(), torch.ones(x:size(2)))
+   local xm = torch.add(x, -1, m)
+
+   -- calculate normalizer
+   local x_std_v = torch.pow(xm, 2):sum(2):add(bias):sqrt():div(scale)
+   x_std_v[torch.lt(x_std_v, epsilon)]:fill(1)
+
+   -- divide by normalizer
+   local x_std = torch.ger(x_std_v:mean(2):squeeze(), torch.ones(x:size(2)))
+   local x_norm = torch.cdiv(xm, x_std)
+
+   return x_norm
+end

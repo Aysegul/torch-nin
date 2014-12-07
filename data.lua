@@ -41,34 +41,7 @@ trainData.data = trainData.data:reshape(trsize,3,32,32)
 testData.data = testData.data:reshape(tesize,3,32,32)
 
 print '==> gcn data'
-function gcn(x, scale, bias, epsilon)
-   local scale = scale or 55
-   local bias = bias or 0
-   local epsilon = epsilon or 1e-8
-
-   if x:dim() > 2 then
-      local num_samples = x:size(1)
-      local length = x:nElement()/num_samples
-      x = x:reshape(num_samples, length)
-   elseif x:dim() < 2 then
-      assert(false)
-   end
-
-   -- subtract mean: x = x - mean(x)
-   local m = torch.ger(x:mean(2):squeeze(), torch.ones(x:size(2)))
-   local xm = torch.add(x, -1, m)
-
-   -- calculate normalizer
-   local x_std_v = torch.pow(xm, 2):sum(2):add(bias):sqrt():div(scale)
-   x_std_v[torch.lt(x_std_v, epsilon)]:fill(1)
-
-   -- divide by normalizer
-   local x_std = torch.ger(x_std_v:mean(2):squeeze(), torch.ones(x:size(2)))
-   local x_norm = torch.cdiv(xm, x_std)
-
-   return x_norm
-end
-
+require 'preprocessing'
 trainData.data = gcn(trainData.data)
 testData.data = gcn(testData.data)
 
@@ -77,9 +50,9 @@ testData.data = testData.data:reshape(10000, 3, 32, 32)
 
 ----------------------------------------------------------------------
 print '==> whiten data'
-require 'unsup'
-trainData.data, means, P, invP = unsup.zca_whiten(trainData.data, mean, P, invP, 0.1)
-testData.data = unsup.zca_whiten(testData.data, means, P, invP, 0.1)
+local means, P = zca_whiten_fit(trainData.data)
+trainData.data = zca_whiten_apply(testData.data, means, P)
+testData.data  = zca_whiten_apply(testData.data, means, P)
 
 -- Exports
 return {
