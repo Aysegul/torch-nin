@@ -58,6 +58,7 @@ model:cuda()
 loss = nn.ClassNLLCriterion()
 
 ----------------------------------------------------------------------
+---- set individual learning rates and weight decays
 local wds = 1e-4
 local weight_size = 967006
 local learningRates = torch.Tensor(weight_size):fill(0)
@@ -87,8 +88,6 @@ end
 loss:cuda()
 
 
-learningRates:cuda()
-weightDecays:cuda()
 -- return package:
 return {
    model = model,
