@@ -11,7 +11,6 @@ if not paths.dirp('cifar-10-batches-t7') then
    os.execute('wget ' .. www .. '; '.. 'tar xvf ' .. tar)
 end
 
--- dataset size: -- will be resized below by opt.smalldata!!!!! be cautious!
 local trsize = 50000
 local tesize = 10000
 
@@ -45,8 +44,8 @@ require 'preprocessing'
 trainData.data = gcn(trainData.data)
 testData.data = gcn(testData.data)
 
-trainData.data = trainData.data:reshape(50000, 3, 32, 32)
-testData.data = testData.data:reshape(10000, 3, 32, 32)
+trainData.data = trainData.data:reshape(trsize, 3, 32, 32)
+testData.data = testData.data:reshape(tesize, 3, 32, 32)
 
 ----------------------------------------------------------------------
 print '==> whiten data'
