@@ -50,7 +50,7 @@ testData.data = testData.data:reshape(tesize, 3, 32, 32)
 ----------------------------------------------------------------------
 print '==> whiten data'
 local means, P = zca_whiten_fit(trainData.data)
-trainData.data = zca_whiten_apply(testData.data, means, P)
+trainData.data = zca_whiten_apply(trainData.data, means, P)
 testData.data  = zca_whiten_apply(testData.data, means, P)
 
 -- Exports
