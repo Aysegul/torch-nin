@@ -4,6 +4,8 @@
 -- Clement Farabet
 ----------------------------------------------------------------------
 
+local filename = 'cifar-100-preprocessed-gcn-whitened.t7'
+if not paths.dirp(filename) then
 -- download dataset
 if not paths.dirp('cifar-10-batches-t7') then
    local www = 'http://torch7.s3-website-us-east-1.amazonaws.com/data/cifar-10-torch.tar.gz'
@@ -53,6 +55,15 @@ local means, P = zca_whiten_fit(trainData.data)
 trainData.data = zca_whiten_apply(trainData.data, means, P)
 testData.data  = zca_whiten_apply(testData.data, means, P)
 
+torch.save(filename, {trainData = trainData, testData = testData})
+else 
+d = torch.load(filename)
+trainData = d.trainData
+testData = d.testData
+end
+
+print(trainData.data:mean())
+print(testData.data:mean())
 -- Exports
 return {
    trainData = trainData,
