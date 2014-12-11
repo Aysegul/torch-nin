@@ -5,8 +5,8 @@
 ----------------------------------------------------------------------
 
 local filename = 'cifar-100-preprocessed-gcn-whitened.t7'
-if not paths.dirp(filename) then
--- download dataset
+if not paths.filep(filename) then
+   -- download dataset
    if not paths.dirp('cifar-10-batches-t7') then
      local www = 'http://torch7.s3-website-us-east-1.amazonaws.com/data/cifar-10-torch.tar.gz'
      local tar = paths.basename(www)
