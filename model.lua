@@ -60,7 +60,9 @@ loss = nn.ClassNLLCriterion()
 ----------------------------------------------------------------------
 ---- set individual learning rates and weight decays
 local wds = 1e-4
-local weight_size = 967006
+
+local dE, param = model:getParameters()
+local weight_size = dE:size(1)
 local learningRates = torch.Tensor(weight_size):fill(0)
 local weightDecays = torch.Tensor(weight_size):fill(0)
 local counter = 0
