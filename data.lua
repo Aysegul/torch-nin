@@ -62,8 +62,8 @@ else
    testData = d.testData
 end
 
-print(trainData.data:mean())
-print(testData.data:mean())
+print('train data mean:', trainData.data:mean())
+print('test data mean:', testData.data:mean())
 -- Exports
 return {
    trainData = trainData,
