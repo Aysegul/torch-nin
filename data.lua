@@ -4,7 +4,7 @@
 -- Clement Farabet
 ----------------------------------------------------------------------
 
-local filename = 'cifar-100-preprocessed-gcn-whitened.t7'
+local filename = 'cifar-10-preprocessed-gcn-whitened.t7'
 if not paths.filep(filename) then
    -- download dataset
    if not paths.dirp('cifar-10-batches-t7') then
