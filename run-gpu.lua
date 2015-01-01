@@ -9,7 +9,7 @@ require 'torch'
 print '==> processing options'
 
 opt = lapp[[
-   -r,--learningRate       (default 1e-3)        learning rate
+   -r,--learningRate       (default 2e-3)        learning rate
    -d,--learningRateDecay  (default 0)           learning rate decay)
    -w,--weightDecay        (default 0)           L2 penalty on the weights
    -m,--momentum           (default 0.9)         momentum
@@ -32,7 +32,7 @@ require 'cunn'
 cutorch.setDevice(opt.devid)
 print('==> using GPU #' .. cutorch.getDevice())
 print(cutorch.getDeviceProperties(opt.devid))
-
+cutorch.manualSeed(1)
 ----------------------------------------------------------------------
 print '==> load modules'
 
